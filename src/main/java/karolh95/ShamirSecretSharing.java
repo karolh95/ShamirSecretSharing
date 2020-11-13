@@ -54,6 +54,9 @@ public final class ShamirSecretSharing {
 
     public Share[] shareSecret(BigInteger[] keys) {
 
+        if (keys.length < threshold)
+            throw new IllegalArgumentException("Keys number should be greater or equal to threshold");
+
         Share[] shares = new Share[threshold];
 
         for (int i = 0; i < threshold; i++) {
