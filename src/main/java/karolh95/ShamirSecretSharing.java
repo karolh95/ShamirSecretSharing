@@ -11,7 +11,6 @@ public final class ShamirSecretSharing {
     private static final int DEFAULT_SECRET_BIT_LENGTH = 2048;
     private static final int P_ADDITIONAL_LENGTH = 512;
 
-    private final BigInteger secret;
     private final BigInteger p;
     private final RandomPolynomial polynomial;
     private final int threshold;
@@ -33,7 +32,6 @@ public final class ShamirSecretSharing {
     public ShamirSecretSharing(int threshold, BigInteger secret, BigInteger p) {
 
         this.threshold = threshold;
-        this.secret = secret;
         this.p = p;
 
         polynomial = new RandomPolynomial(p, threshold);
@@ -78,16 +76,7 @@ public final class ShamirSecretSharing {
                 .threshold(threshold)
                 .build();
 
-        BigInteger result = interpolation.solve(BigInteger.ZERO);
-
-        if (result.equals(secret)) {
-            System.out.println("Secret reconstructed:");
-            System.out.println(secret);
-            return result;
-        } else {
-            System.err.println("Error during reconstruction");
-            return BigInteger.ZERO;
-        }
+        return interpolation.solve(BigInteger.ZERO);
     }
 
     private BigInteger[] map(Share[] shares, Function<Share, BigInteger> supplier) {
