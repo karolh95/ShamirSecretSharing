@@ -76,7 +76,7 @@ public final class ShamirSecretSharing {
                 .p(p)
                 .inputs(keys)
                 .outputs(shadows)
-                .threshold(threshold)
+                .threshold(shares.length)
                 .build();
 
         return interpolation.solve(BigInteger.ZERO);
