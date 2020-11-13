@@ -1,11 +1,10 @@
 package karolh95;
 
 import java.math.BigInteger;
-import java.util.function.Function;
 
 import static karolh95.BigIntegerFactory.getRandom;
 
-public class RandomPolynomial implements Function<BigInteger, BigInteger> {
+public class RandomPolynomial {
 
     private final BigInteger p;
     private final BigInteger[] coefficients;
@@ -25,8 +24,8 @@ public class RandomPolynomial implements Function<BigInteger, BigInteger> {
         this.coefficients[i] = value;
     }
 
-    @Override
     public BigInteger apply(BigInteger x) {
+
         BigInteger result = BigInteger.ZERO;
 
         for (int i = 0; i < coefficients.length; i++) {

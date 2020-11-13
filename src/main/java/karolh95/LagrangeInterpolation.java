@@ -1,12 +1,10 @@
 package karolh95;
 
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 
 import java.math.BigInteger;
 
 @Builder
-@RequiredArgsConstructor
 public class LagrangeInterpolation {
 
     private final BigInteger p;
