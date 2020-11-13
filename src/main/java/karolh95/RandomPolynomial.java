@@ -1,8 +1,9 @@
 package karolh95;
 
 import java.math.BigInteger;
-import java.util.Random;
 import java.util.function.Function;
+
+import static karolh95.BigIntegerFactory.getRandom;
 
 public class RandomPolynomial implements Function<BigInteger, BigInteger> {
 
@@ -11,14 +12,12 @@ public class RandomPolynomial implements Function<BigInteger, BigInteger> {
 
     public RandomPolynomial(BigInteger p, int threshold) {
 
-        Random random = new Random();
-
         this.p = p;
         this.coefficients = new BigInteger[threshold];
 
         int numBits = p.bitCount();
         for (int i = 0; i < threshold; i++) {
-            coefficients[i] = new BigInteger(numBits, random);
+            coefficients[i] = getRandom(numBits);
         }
     }
 

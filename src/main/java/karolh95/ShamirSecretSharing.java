@@ -2,8 +2,9 @@ package karolh95;
 
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.Random;
 import java.util.function.Function;
+
+import static karolh95.BigIntegerFactory.getPrime;
 
 public final class ShamirSecretSharing {
 
@@ -13,7 +14,6 @@ public final class ShamirSecretSharing {
     private final BigInteger secret;
     private final BigInteger p;
     private final RandomPolynomial polynomial;
-
     private final int threshold;
 
     public ShamirSecretSharing(int threshold) {
@@ -22,12 +22,19 @@ public final class ShamirSecretSharing {
 
     public ShamirSecretSharing(int threshold, int secretBitLength) {
 
-        Random random = new Random();
+        this(threshold, getPrime(secretBitLength));
+    }
+
+    public ShamirSecretSharing(int threshold, BigInteger secret) {
+
+        this(threshold, secret, getPrime(secret.bitLength() + P_ADDITIONAL_LENGTH));
+    }
+
+    public ShamirSecretSharing(int threshold, BigInteger secret, BigInteger p) {
 
         this.threshold = threshold;
-
-        secret = BigInteger.probablePrime(secretBitLength, random);
-        p = BigInteger.probablePrime(secretBitLength + P_ADDITIONAL_LENGTH, random);
+        this.secret = secret;
+        this.p = p;
 
         polynomial = new RandomPolynomial(p, threshold);
         polynomial.setCoefficient(0, secret);
