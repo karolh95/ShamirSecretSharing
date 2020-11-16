@@ -57,9 +57,9 @@ public final class ShamirSecretSharing {
         if (keys.length < threshold)
             throw new IllegalArgumentException("Keys number should be greater or equal to threshold");
 
-        Share[] shares = new Share[threshold];
+        Share[] shares = new Share[keys.length];
 
-        for (int i = 0; i < threshold; i++) {
+        for (int i = 0; i < keys.length; i++) {
             BigInteger shadow = polynomial.apply(keys[i]);
             shares[i] = new Share(keys[i], shadow);
         }
