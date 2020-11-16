@@ -1,10 +1,9 @@
 package karolh95;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
-
-import static org.junit.Assert.assertArrayEquals;
 
 public class RandomPolynomialTest {
 
@@ -44,6 +43,6 @@ public class RandomPolynomialTest {
                 polynomial.apply(inputs[4])
         };
 
-        assertArrayEquals("Output should equals to expected one", expectedOutputs, outputs);
+        Assertions.assertArrayEquals(expectedOutputs, outputs, "Output should equals to expected one");
     }
 }

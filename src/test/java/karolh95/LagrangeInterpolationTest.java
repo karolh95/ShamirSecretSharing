@@ -1,7 +1,7 @@
 package karolh95;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 
@@ -40,6 +40,6 @@ public class LagrangeInterpolationTest {
 
         BigInteger a0 = interpolation.solve(BigInteger.ZERO);
 
-        Assert.assertEquals("a0 should be equal to secret", secret, a0);
+        Assertions.assertEquals(secret, a0, "a0 should be equal to secret");
     }
 }
