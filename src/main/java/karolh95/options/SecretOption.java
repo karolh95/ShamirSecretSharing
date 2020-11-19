@@ -7,7 +7,7 @@ public class SecretOption extends Option {
     private static final String opt = "k";
     public static final String longOpt = "secret";
     private static final Boolean hasArg = true;
-    private static final String description = "secret, prime number";
+    private static final String description = "bitLength of the secret";
 
     public SecretOption() {
         super(opt, longOpt, hasArg, description);
