@@ -59,14 +59,12 @@ class CustomCommandLineParserTest {
         CustomCommandLineParser parser = new CustomCommandLineParser();
         CommandLine cmd = parser.parse(args);
 
-        Assertions.assertDoesNotThrow(() -> {
+        Assertions.assertNotNull(cmd, "CustomCommandLineParser::parse should not return null");
 
-            for (String option : optionsNames) {
-                boolean hasOption = cmd.hasOption(option);
-                Assertions.assertTrue(hasOption, "Option " + option + " not found in " + Arrays.toString(args));
-            }
-        }, "CustomCommandLineParser should not throw any exceptions");
-
+        for (String option : optionsNames) {
+            boolean hasOption = cmd.hasOption(option);
+            Assertions.assertTrue(hasOption, "Option " + option + " not found in " + Arrays.toString(args));
+        }
     }
 
     @ParameterizedTest
@@ -75,8 +73,8 @@ class CustomCommandLineParserTest {
 
         CustomCommandLineParser parser = new CustomCommandLineParser();
 
-        Assertions.assertThrows(ParseException.class, () -> {
-            parser.parse(args);
-        }, "CustomCommandLineParser should throws ParseException");
+        CommandLine cmd = parser.parse(args);
+
+        Assertions.assertNull(cmd, "CustomCommandLineParser::parse should return null");
     }
 }
