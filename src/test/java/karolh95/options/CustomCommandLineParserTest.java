@@ -4,15 +4,21 @@ import karolh95.CustomCommandLineParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
 class CustomCommandLineParserTest {
+
+    private final PrintStream originalOut = System.out;
 
     private static List<Arguments> parseTest() {
 
@@ -50,6 +56,17 @@ class CustomCommandLineParserTest {
                 Arguments.of((Object) toParamsWithoutArgs(new ShadowsOption())),
                 Arguments.of((Object) toParamsWithoutArgs(new ThresholdOption()))
         );
+    }
+
+    @BeforeEach
+    private void setUpStreams() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+    }
+
+    @AfterEach
+    private void restoreStreams() {
+        System.setOut(originalOut);
     }
 
     @ParameterizedTest
