@@ -27,7 +27,9 @@ class CustomCommandLineParserTest {
                 toArguments(new InputFileOption()),
                 toArguments(new OutputFileOption()),
                 toArguments(new PrimeOption()),
+                toArguments(new PrimeBitLengthOption()),
                 toArguments(new SecretOption()),
+                toArguments(new SecretBitLengthOption()),
                 toArguments(new ShadowsOption()),
                 toArguments(new ThresholdOption())
         );
@@ -52,7 +54,9 @@ class CustomCommandLineParserTest {
         return List.of(
                 Arguments.of((Object) toParamsWithoutArgs(new InputFileOption())),
                 Arguments.of((Object) toParamsWithoutArgs(new PrimeOption())),
+                Arguments.of((Object) toParamsWithoutArgs(new PrimeBitLengthOption())),
                 Arguments.of((Object) toParamsWithoutArgs(new SecretOption())),
+                Arguments.of((Object) toParamsWithoutArgs(new SecretBitLengthOption())),
                 Arguments.of((Object) toParamsWithoutArgs(new ShadowsOption())),
                 Arguments.of((Object) toParamsWithoutArgs(new ThresholdOption()))
         );
