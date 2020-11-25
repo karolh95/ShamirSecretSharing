@@ -1,8 +1,8 @@
 package karolh95.strategy;
 
-import karolh95.LagrangeInterpolation;
 import karolh95.adapters.CommandLineAdapter;
 import karolh95.parameters.SecretReconstructionParameters;
+import karolh95.shamir.SecretReconstruction;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,15 +21,14 @@ public class SecretReconstructionBehavior implements Behavior {
     @Override
     public void run() {
 
-        LagrangeInterpolation interpolation = LagrangeInterpolation.builder()
+        SecretReconstruction reconstruction = SecretReconstruction.builder()
                 .p(parameters.getP())
                 .threshold(parameters.getThreshold())
                 .inputs(parameters.getInputs())
                 .outputs(parameters.getOutputs())
                 .build();
 
-        BigInteger secret = interpolation.solve(BigInteger.ZERO);
-        write(secret);
+        write(reconstruction.getSecret());
     }
 
     private void write(BigInteger secret) {

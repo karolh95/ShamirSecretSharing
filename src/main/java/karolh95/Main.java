@@ -1,31 +1,27 @@
 package karolh95;
 
-import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import karolh95.options.OptionsFactory;
+import karolh95.strategy.BehaviorFactory;
+import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 public class Main {
 
-    private static final int THRESHOLD = 8;
-    private static final int SHADOWS = 16;
-
     public static void main(String[] args) {
 
-        ShamirSecretSharing sss = new ShamirSecretSharing(THRESHOLD);
+        Options options = OptionsFactory.getOptions();
+        CommandLineParser parser = new BasicParser();
+        CommandLine cmd = null;
 
-        Share[] shares = sss.shareSecret(SHADOWS);
+        try {
+            cmd = parser.parse(options, args);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
 
-        Share[] randomShares = getRandomShares(shares, THRESHOLD);
-
-        BigInteger secret = sss.reconstruction(randomShares);
-    }
-
-    public static Share[] getRandomShares(Share[] shares, int threshold) {
-
-        List<Share> shadow = Arrays.asList(shares);
-        Collections.shuffle(shadow);
-
-        return shadow.stream().limit(threshold).toArray(Share[]::new);
+        BehaviorFactory.getBehavior(cmd).run();
     }
 }

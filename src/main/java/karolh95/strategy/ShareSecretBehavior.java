@@ -1,14 +1,13 @@
 package karolh95.strategy;
 
-import karolh95.RandomPolynomial;
 import karolh95.Share;
 import karolh95.adapters.CommandLineAdapter;
 import karolh95.parameters.ShareSecretParameters;
+import karolh95.shamir.SecretSharing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.math.BigInteger;
 
 public class ShareSecretBehavior implements Behavior {
 
@@ -21,18 +20,14 @@ public class ShareSecretBehavior implements Behavior {
     @Override
     public void run() {
 
-        RandomPolynomial polynomial = new RandomPolynomial(parameters.getP(), parameters.getThreshold());
-        polynomial.setCoefficient(0, parameters.getSecret());
+        SecretSharing sharing = SecretSharing.builder()
+                .p(parameters.getP())
+                .secret(parameters.getSecret())
+                .sharesNumber(parameters.getShares())
+                .threshold(parameters.getThreshold())
+                .build();
 
-        Share[] shares = new Share[parameters.getShares()];
-
-        for (int i = 0; i < parameters.getShares(); i++) {
-
-            BigInteger key = BigInteger.valueOf(i + 1);
-            BigInteger shadow = polynomial.apply(key);
-
-            shares[i] = new Share(key, shadow);
-        }
+        Share[] shares = sharing.shareSecret();
 
         write(shares);
     }

@@ -1,5 +1,7 @@
 package karolh95;
 
+import karolh95.shamir.SecretReconstruction;
+import karolh95.shamir.SecretSharing;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,8 +10,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 
 public class ShamirSecretSharingTest {
 
@@ -33,9 +37,14 @@ public class ShamirSecretSharingTest {
     @MethodSource("source")
     public void testShamirSecretSharing(BigInteger secret, BigInteger p, int threshold, int shadows) {
 
-        ShamirSecretSharing sss = new ShamirSecretSharing(threshold, secret, p);
+        SecretSharing secretSharing = SecretSharing.builder()
+                .p(p)
+                .secret(secret)
+                .sharesNumber(shadows)
+                .threshold(threshold)
+                .build();
 
-        Share[] shares = sss.shareSecret(shadows);
+        Share[] shares = secretSharing.shareSecret();
 
         Iterator<int[]> combinationsIterator = CombinatoricsUtils.combinationsIterator(shadows, threshold);
 
@@ -43,7 +52,17 @@ public class ShamirSecretSharingTest {
 
             Share[] sharesCombination = getCombination(shares, combinationsIterator.next());
 
-            BigInteger result = sss.reconstruction(sharesCombination);
+            BigInteger[] inputs = mapToArray(sharesCombination, Share::getKey);
+            BigInteger[] outputs = mapToArray(sharesCombination, Share::getShadow);
+
+            SecretReconstruction reconstruction = SecretReconstruction.builder()
+                    .p(p)
+                    .threshold(sharesCombination.length)
+                    .inputs(inputs)
+                    .outputs(outputs)
+                    .build();
+
+            BigInteger result = reconstruction.getSecret();
 
             Assertions.assertEquals(secret, result, "Every combinations of shares should be correct");
         }
@@ -60,5 +79,8 @@ public class ShamirSecretSharingTest {
         return combination;
     }
 
-//        String secret = "85583293427518763932407382077233708608907744591022138463981786212146730513297";
+    private BigInteger[] mapToArray(Share[] shares, Function<Share, BigInteger> function) {
+
+        return Arrays.stream(shares).map(function).toArray(BigInteger[]::new);
+    }
 }
