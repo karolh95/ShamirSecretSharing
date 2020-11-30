@@ -1,15 +1,7 @@
 package karolh95.adapters;
 
 import karolh95.BigIntegerFactory;
-import karolh95.options.InputFileOption;
-import karolh95.options.OutputFileOption;
-import karolh95.options.PrimeBitLengthOption;
-import karolh95.options.PrimeOption;
-import karolh95.options.ReconstructionOption;
-import karolh95.options.SecretBitLengthOption;
-import karolh95.options.SecretOption;
-import karolh95.options.SharesOption;
-import karolh95.options.ThresholdOption;
+import karolh95.options.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.cli.CommandLine;
 
@@ -22,6 +14,10 @@ public class CommandLineAdapter {
     private static final String DEFAULT_OUTPUT = "output";
 
     private final CommandLine cmd;
+
+    public boolean isHelpEnabled() {
+        return cmd.hasOption(HelpOption.longOpt);
+    }
 
     public boolean isReconstruction() {
         return cmd.hasOption(ReconstructionOption.longOpt);

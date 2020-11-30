@@ -7,6 +7,7 @@ public class OptionsFactory {
     public static Options getOptions() {
 
         Options options = new Options();
+        options.addOption(new HelpOption());
         options.addOption(new ReconstructionOption());
         options.addOption(new InputFileOption());
         options.addOption(new OutputFileOption());
