@@ -11,6 +11,5 @@ public class OutputFileOption extends Option {
 
     public OutputFileOption() {
         super(opt, longOpt, hasArg, description);
-        setRequired(true);
     }
 }
