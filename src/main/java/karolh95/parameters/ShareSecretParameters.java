@@ -25,7 +25,6 @@ public class ShareSecretParameters {
         } else {
             setParametersFromCommandLineAdapter(adapter);
         }
-        validateParameters();
         outputFileName = adapter.getOutputFileName();
     }
 
@@ -58,25 +57,5 @@ public class ShareSecretParameters {
         shares = adapter.getShares();
         p = adapter.getPrime();
         secret = adapter.getSecret();
-    }
-
-    private void validateParameters() {
-        if (threshold < 2)
-            throw new IllegalArgumentException("Threshold should be >=2");
-
-        if (shares < 2)
-            throw new IllegalArgumentException("Shares number should be ");
-
-        if (shares < threshold)
-            throw new IllegalArgumentException("Shares number should be >= threshold");
-
-        if (p.compareTo(BigInteger.ONE) <= 0)
-            throw new IllegalArgumentException("Prime should be > 0");
-
-        if (secret.compareTo(BigInteger.ONE) <= 0)
-            throw new IllegalArgumentException("Secret should be > 0");
-
-        if (p.compareTo(secret) <= 0)
-            throw new IllegalArgumentException("Prime should be > than secret");
     }
 }

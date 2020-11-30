@@ -16,6 +16,8 @@ public class SecretSharing {
 
     public Share[] shareSecret() {
 
+        validateParameters();
+
         RandomPolynomial polynomial = new RandomPolynomial(p, threshold);
         polynomial.setCoefficient(0, secret);
 
@@ -29,5 +31,26 @@ public class SecretSharing {
         }
 
         return shares;
+    }
+
+    private void validateParameters() {
+
+        if (threshold < 2)
+            throw new IllegalArgumentException("Threshold should be >=2");
+
+        if (sharesNumber < 2)
+            throw new IllegalArgumentException("Shares number should be ");
+
+        if (sharesNumber < threshold)
+            throw new IllegalArgumentException("Shares number should be >= threshold");
+
+        if (p.compareTo(BigInteger.ONE) <= 0)
+            throw new IllegalArgumentException("Prime should be > 0");
+
+        if (secret.compareTo(BigInteger.ONE) <= 0)
+            throw new IllegalArgumentException("Secret should be > 0");
+
+        if (p.compareTo(secret) <= 0)
+            throw new IllegalArgumentException("Prime should be > than secret");
     }
 }
