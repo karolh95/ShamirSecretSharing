@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 @Getter
@@ -26,6 +27,11 @@ public class SecretReconstructionParameters {
     }
 
     private void readFromFile(String filename) {
+
+        if (filename == null) {
+            System.out.println("Input file name is null");
+            return;
+        }
 
         File file = new File(filename);
 
@@ -54,7 +60,16 @@ public class SecretReconstructionParameters {
             scanner.close();
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("File: '" + filename + "' does not exist.");
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Incorrect file format");
+            System.out.println("Expected:");
+            System.out.println("<prime>");
+            System.out.println("<key1> <shadow1>");
+            System.out.println("<key2> <shadow2>");
+            System.out.println("...");
+            System.out.println("<keyN> <shadowN>");
         }
     }
 }
