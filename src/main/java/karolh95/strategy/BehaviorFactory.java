@@ -2,6 +2,7 @@ package karolh95.strategy;
 
 import karolh95.adapters.CommandLineAdapter;
 import karolh95.options.OptionsFactory;
+import karolh95.parameters.SecretReconstructionParameters;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -29,7 +30,7 @@ public class BehaviorFactory {
             return new DefaultBehavior();
 
         return adapter.isReconstruction()
-                ? new SecretReconstructionBehavior(adapter)
+                ? new SecretReconstructionBehavior(new SecretReconstructionParameters(adapter))
                 : new ShareSecretBehavior(adapter);
     }
 }

@@ -1,22 +1,18 @@
 package karolh95.strategy;
 
-import karolh95.adapters.CommandLineAdapter;
 import karolh95.parameters.SecretReconstructionParameters;
 import karolh95.shamir.SecretReconstruction;
+import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.math.BigInteger;
 
+@RequiredArgsConstructor
 public class SecretReconstructionBehavior implements Behavior {
 
     private final SecretReconstructionParameters parameters;
-
-    public SecretReconstructionBehavior(CommandLineAdapter adapter) {
-
-        parameters = new SecretReconstructionParameters(adapter);
-    }
 
     @Override
     public void run() {
